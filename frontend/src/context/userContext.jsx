@@ -1,6 +1,8 @@
 import React, { createContext, useState, useEffect } from "react";
 import axiosInstance from "../utils/axiosinstance";
 import { API_PATHS, BASE_URL } from "../utils/apiPaths";
+import toast from "react-hot-toast";
+
 
 export const UserContext = createContext();
 
@@ -50,8 +52,8 @@ export const UserProvider = ({ children }) => {
             const progressRes = await axiosInstance.get("/api/user/sheet-progress");
             setSheetProgress(progressRes.data.progressList || []);
         } catch (error) {
-            setSheetProgress([]);
-        }
+    toast.error("Unable to refresh progress. Please try again.");
+}
     };
     return (
         <UserContext.Provider value={{ user, loading, updateUser, clearUser, sheetProgress, refreshSheetProgress }}>
