@@ -9,6 +9,7 @@ import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import { Toaster } from "react-hot-toast";
 import { AnimatePresence } from "framer-motion";
 import PageTransition from "./components/animations/PageTransition";
+import ErrorBoundary from "./components/ErrorBoundary";
 
 import Login from "./pages/Auth/Login";
 import SignUp from "./pages/Auth/SignUp";
@@ -42,45 +43,65 @@ const ProtectedRoute = ({ children }) => {
   return children;
 };
 
+const BuggyComponent = () => {
+  throw new Error("This is a simulated crash to test the Error Boundary component!");
+};
+
 const App = () => {
   return (
     <ThemeProvider>
       <UserProvider>
-        <div className="min-h-screen bg-[var(--color-background)] text-[var(--color-text-dark)] transition-colors duration-300">
+        <ErrorBoundary>
+          <div className="min-h-screen bg-[var(--color-background)] text-[var(--color-text-dark)] transition-colors duration-300">
           <Router>
             <AnimatePresence mode="wait">
               <Routes>
+                {/* Routes without Sidebar */}
                 <Route
                   path="/"
                   element={
-                    <PageTransition>
-                      <LandingPage />
-                    </PageTransition>
+                    <ErrorBoundary>
+                      <PageTransition>
+                        <LandingPage />
+                      </PageTransition>
+                    </ErrorBoundary>
                   }
                 />
                 <Route
                   path="/login"
                   element={
-                    <PageTransition>
-                      <Login />
-                    </PageTransition>
+                    <ErrorBoundary>
+                      <PageTransition>
+                        <Login />
+                      </PageTransition>
+                    </ErrorBoundary>
                   }
                 />
                 <Route
                   path="/interview-prep/:sessionId"
                   element={
-                    <PageTransition>
-                      <InterviewPrep />
-                    </PageTransition>
+                    <ErrorBoundary>
+                      <PageTransition>
+                        <InterviewPrep />
+                      </PageTransition>
+                    </ErrorBoundary>
                   }
                 />
+                {import.meta.env.DEV && (
+                  <Route
+                    path="/test-error"
+                    element={<BuggyComponent />}
+                  />
+                )}
                 <Route
                   path="/resume-builder/:id"
                   element={
                     <ProtectedRoute>
-                      <PageTransition>
-                        <ResumeEditor />
-                      </PageTransition>
+                      <ErrorBoundary>
+                        <PageTransition>
+                          <ResumeEditor />
+                        </PageTransition>
+                      </ErrorBoundary>
                     </ProtectedRoute>
                   }
                 />
@@ -100,6 +121,12 @@ const App = () => {
                       </PageTransition>
                     }
                   />
+                  {import.meta.env.DEV && (
+                    <Route
+                      path="/layout-test-error"
+                      element={<BuggyComponent />}
+                    />
+                  )}
                   <Route
                     path="/ai-helper"
                     element={
@@ -274,7 +301,8 @@ const App = () => {
               },
             }}
           />
-        </div>
+          </div>
+        </ErrorBoundary>
       </UserProvider>
     </ThemeProvider>
   );
