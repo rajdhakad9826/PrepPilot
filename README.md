@@ -223,6 +223,15 @@ PrepPilot/
 │   │   ├── resumeController.js       # Resume operations
 │   │   ├── sessionController.js      # Session management
 │   │   └── userSheetProgressController.js # Progress tracking
+|   |
+│   ├── 📂 Input_Validators/                 # Extract the logic for Input validations
+│   │   ├── ValidateAchievement.js           # Validate and check input for Achievement Controller
+│   │   ├── ValidateAi.js                    # Validate and check input for Ai/Gemini Controller
+│   │   ├── ValidateAuth.js                  # Validate and check input for Authentication Controller
+│   │   ├── ValidateQuestions.js             # Validate and check input for Question Management Controller
+│   │   ├── ValidateResume.js                # Validate and check input for Resume Controller
+│   │   ├── ValidateSession.js               # Validate and check input for Session Controller Controller
+│   │   └── ValidateUserSheetProgess.js      # Validate and check input for UserSheetProgress Controller
 │   │
 │   ├── 📂 middlewares/               # Express middlewares
 │   │   ├── authMiddleware.js         # JWT verification
