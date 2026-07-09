@@ -3,6 +3,8 @@ import React, { useContext, useState, useEffect, useRef } from "react";
 import { APP_FEATURES, HOW_IT_WORKS_STEPS } from "./utils/data";
 import { useNavigate } from "react-router-dom";
 import { Link } from "react-router-dom";
+import React, { useContext, useState, useEffect } from "react";
+import { APP_FEATURES, STATS, HOW_IT_WORKS_STEPS } from "./utils/data";
 import { useNavigate, Link } from "react-router-dom";
 import {
   LuSparkles,
